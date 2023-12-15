@@ -1,6 +1,4 @@
-import java.util.Arrays;
-
-public class preuna {
+public class Main {
 
     static final char agua ='-';
     static final char lancha ='L';
@@ -27,24 +25,32 @@ public class preuna {
             }
         }
         llenarTablero();
+
         for (int i = 0; i < tablero.length; i++){
-            System.out.println(Arrays.toString(tablero[i]));
+            if(i>0)System.out.print(i+"\t");
+            else System.out.print("\n");
+
+            if (i == 0) {
+                for (int j = 0; j < tablero[i].length; j++){
+                    if (j == 0) System.out.print("\t"+j+"\t");
+                    else System.out.print(j+"\t");
+                }
+            }else for (int j = 0; j < tablero[i].length; j++){
+                    System.out.print(tablero[i][j] + "\t");
+            }System.out.println("\n");
         }
     }
     
     
     static void llenarTablero() {
-
-        int totalBarcos = (lanchasCantidad + barcosCantidad + crucerosCantidad + portavionesCantidad);
-        System.out.println("totalBarcos:" + totalBarcos);
+        boolean hayBarcos;
+        int totalBarcos = lanchasCantidad + barcosCantidad + crucerosCantidad + portavionesCantidad;
         char tipoBarco = lancha;
 
-        while (totalBarcos > 0) {
+        do {
 
             if (tipoBarco == lancha) {
-                System.out.println("a");
                 lanchaPosicionAleatoria();
-                System.out.println("b");
                 totalBarcos--;
                 tipoBarco = barco;
             } else if (tipoBarco == barco) {
@@ -59,9 +65,11 @@ public class preuna {
                 portavionesPosicionAleatoria();
                 totalBarcos--;
             }
+            hayBarcos = (totalBarcos > 0);
     
-        }return;
-
+        }while (hayBarcos);
+        return;
+        
     }
     static void lanchaPosicionAleatoria(){
 
