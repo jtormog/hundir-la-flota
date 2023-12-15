@@ -3,12 +3,11 @@ import java.util.Scanner;
 
 public class Main {
 
-    enum opciones {
-        FACIL,
-        MEDIO,
-        DIFICIL,
-        CUSTOM
-    }
+    static final int FACIL = 1;
+    static final int MEDIO = 2;
+    static final int DIFICIL = 3;
+    static final int CUSTOM = 4;
+
     static int tamanyoTablero = 10;
 
     static char[][] ocultoTablero = new char[tamanyoTablero][tamanyoTablero];
@@ -38,9 +37,10 @@ public class Main {
         llenarTablero();
         //mostrarTableroOculto();
         do{
+            mostrarTableroJugador();
             System.out.println("Intentos restantes: "+intentos);
             if (inputUsuario() == 8) break;
-            mostrarTableroJugador();
+
 
             intentos--;
             jugando = (intentos > 0);
@@ -72,8 +72,7 @@ public class Main {
     static void seleccionDeDificultad(){
 
         System.out.println("Selecciona una dificultad:\n\n1. Facil\n2. Medio\n3. Dificil\n4. Custom\n");
-        int opcion = inputUsuario()-1;
-        opciones dificultad = opciones.values()[opcion];
+        int dificultad = inputUsuario();
         boolean seleccionado = false;
 
         while (!seleccionado) {
@@ -106,6 +105,7 @@ public class Main {
                         break;
                     default:
                         System.out.println("No es una opcion valida");
+                        dificultad = inputUsuario();
                         break;
             }   
         }
@@ -125,17 +125,25 @@ public class Main {
 
         do {
 
-            if (tipoBarco == lancha) {
+            switch (tipoBarco) {
+                case lancha:
                 lanchaPosicionAleatoria();
                 tipoBarco = barco;
-            } else if (tipoBarco == barco) {
+                    break;
+                case barco:
                 barcoPosicionAleatoria();
                 tipoBarco = crucero;
-            } else if (tipoBarco == crucero) {
+                    break;
+                case crucero:
                 cruceroPosicionAleatoria();
                 tipoBarco = portaviones;
-            } else if (tipoBarco == portaviones) {
+                    break;
+                case portaviones:
                 portavionesPosicionAleatoria();
+                tipoBarco = lancha;
+                    break;
+                default:
+                    break;
             }
             int totalBarcos = lanchasCantidad + barcosCantidad + crucerosCantidad + portavionesCantidad;
             hayBarcos = (totalBarcos > 0);
