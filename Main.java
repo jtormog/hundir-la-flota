@@ -111,38 +111,33 @@ public class Main {
         }
     }
     static void llenarTablero() {
-
         for (int i = 0; i < ocultoTablero.length; i++){
             for (int j = 0; j < ocultoTablero[i].length; j++){
                 ocultoTablero[i][j] = agua;
                 jugadorTablero[i][j] = agua;
             }
         }
-
         boolean hayBarcos;
-
         char tipoBarco = lancha;
 
         do {
 
             switch (tipoBarco) {
                 case lancha:
-                lanchaPosicionAleatoria();
-                tipoBarco = barco;
+                    lanchaPosicionAleatoria();
+                    tipoBarco = barco;
                     break;
                 case barco:
-                barcoPosicionAleatoria();
-                tipoBarco = crucero;
+                    barcoPosicionAleatoria();
+                    tipoBarco = crucero;
                     break;
                 case crucero:
-                cruceroPosicionAleatoria();
-                tipoBarco = portaviones;
+                    cruceroPosicionAleatoria();
+                    tipoBarco = portaviones;
                     break;
                 case portaviones:
-                portavionesPosicionAleatoria();
-                tipoBarco = lancha;
-                    break;
-                default:
+                    portavionesPosicionAleatoria();
+                    tipoBarco = lancha;
                     break;
             }
             int totalBarcos = lanchasCantidad + barcosCantidad + crucerosCantidad + portavionesCantidad;
