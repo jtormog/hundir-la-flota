@@ -15,14 +15,13 @@ public class Main {
 
     static final char agua ='-';
     static final char lancha ='L';
-    static final int barco = 'B';
-    static final int crucero = 'C';
-    static final int portaviones = 'P';
+    static final char barco = 'B';
+    static final char crucero = 'C';
+    static final char portaviones = 'P';
 
-    static final int tamanyoLancha = 1;
-    static final int tamanyoBarco = 3;
-    static final int tamanyoCrucero = 4;
-    static final int tamanyoPortaviones = 5;
+    static final int espacioBarco = 2;
+    static final int espacioCrucero = 3;
+    static final int espacioPortaviones = 4;
 
     static int lanchasCantidad;
     static int barcosCantidad;
@@ -33,21 +32,22 @@ public class Main {
 
     public static void main(String[] args) {
         boolean jugando;
+
         seleccionDeDificultad();
         llenarTablero();
-        //mostrarTableroOculto();
-        do{
+        mostrarTableroOculto();
+
+        /*do{
             mostrarTableroJugador();
             System.out.println("Intentos restantes: "+intentos);
             if (inputUsuario() == 8) break;
-
 
             intentos--;
             jugando = (intentos > 0);
 
         }while (jugando);
         if (intentos == 0) System.out.println("Has perdido");
-        else System.out.println("Has ganado");
+        else System.out.println("Has ganado");*/
         
 
     }
@@ -170,68 +170,98 @@ public class Main {
     }
     static void lanchaPosicionAleatoria(){
 
-        int xEjePosicionAleatoria = 0;
-        int yEjePosicionAleatoria = 0;
+        int ejeX = 0;
+        int ejeY = 0;
 
             while (lanchasCantidad > 0) {
 
-                xEjePosicionAleatoria = (int) (Math.random() * 10);
-                yEjePosicionAleatoria = (int) (Math.random() * 10);
+                ejeX = (int) (Math.random() * tamanyoTablero);
+                ejeY = (int) (Math.random() * tamanyoTablero);
 
-                if (ocultoTablero[xEjePosicionAleatoria][yEjePosicionAleatoria] == agua) {
-                        ocultoTablero[xEjePosicionAleatoria][yEjePosicionAleatoria] = lancha;
-                        
+                if (posicionValida(lancha, ejeX, ejeY)) {
+                    ocultoTablero[ejeX][ejeY] = lancha;
+                    lanchasCantidad--;
                 }
-                lanchasCantidad--;
-                        
+                 
             }return;
 
     }
     static void barcoPosicionAleatoria(){
-
-        int xEjePosicionAleatoria = 0;
-        int yEjePosicionAleatoria = 0;
-
+        int ejeX = (int) (Math.random() * tamanyoTablero);
+        int ejeY = (int) (Math.random() * tamanyoTablero);
+        
         while (barcosCantidad > 0) {
 
-            xEjePosicionAleatoria = (int) (Math.random() * 10);
-            yEjePosicionAleatoria = (int) (Math.random() * 10);
+            if (ejeX+espacioBarco >= tamanyoTablero) ejeX -= espacioBarco;
 
-            if (ocultoTablero[xEjePosicionAleatoria][yEjePosicionAleatoria] == agua) ocultoTablero[xEjePosicionAleatoria][yEjePosicionAleatoria] = barco;
-            barcosCantidad--;
+            if (posicionValida(barco, ejeY, ejeX)) {
+
+                for (int i = 0; i < 3; i++){
+                    ocultoTablero[ejeY][ejeX] = barco;
+                    ejeX++;
+                    
+                }
+                barcosCantidad--;
+                ejeX = (int) (Math.random() * tamanyoTablero);
+                ejeY = (int) (Math.random() * tamanyoTablero);
+
+            }
+            else{
+                ejeX = (int) (Math.random() * tamanyoTablero);
+                ejeY = (int) (Math.random() * tamanyoTablero);
+            }
+            
                     
         }return;
 
     }
     static void cruceroPosicionAleatoria(){
 
-        int xEjePosicionAleatoria = 0;
-        int yEjePosicionAleatoria = 0;
+        int ejeX = 0;
+        int ejeY = 0;
+
 
         while (crucerosCantidad > 0) {
+            if (ejeX+espacioCrucero >= tamanyoTablero) ejeX -= espacioCrucero;
 
-            xEjePosicionAleatoria = (int) (Math.random() * 10);
-            yEjePosicionAleatoria = (int) (Math.random() * 10);
-
-            if (ocultoTablero[xEjePosicionAleatoria][yEjePosicionAleatoria] == agua) ocultoTablero[xEjePosicionAleatoria][yEjePosicionAleatoria] = crucero;
-            crucerosCantidad--;
+            if (posicionValida(crucero, ejeY, ejeX)) {
+                for (int i = 0; i < 4; i++){
+                    ocultoTablero[ejeY][ejeX] = crucero;
+                    ejeX++;
+                }
+                crucerosCantidad--;
+                ejeX = (int) (Math.random() * tamanyoTablero);
+                ejeY = (int) (Math.random() * tamanyoTablero);
+            }
+            else{
+                ejeX = (int) (Math.random() * tamanyoTablero);
+                ejeY = (int) (Math.random() * tamanyoTablero);
+            }
         }return;
 
     }
     static void portavionesPosicionAleatoria(){
 
-        int xEjePosicionAleatoria = 0;
-        int yEjePosicionAleatoria = 0;
+        int ejeX = 0;
+        int ejeY = 0;
 
         while (portavionesCantidad > 0) {
 
-            xEjePosicionAleatoria = (int) (Math.random() * 10);
-            yEjePosicionAleatoria = (int) (Math.random() * 10);
+           if (ejeY+espacioPortaviones >= tamanyoTablero) ejeY -= espacioPortaviones;
 
-            if (ocultoTablero[xEjePosicionAleatoria][yEjePosicionAleatoria] == agua) ocultoTablero[xEjePosicionAleatoria][yEjePosicionAleatoria] = portaviones;
-            
-            portavionesCantidad--;
-                    
+            if (posicionValida(portaviones, ejeY, ejeX)) {
+                for (int i = 0; i < 5; i++){
+                    ocultoTablero[ejeY][ejeX] = portaviones;
+                    ejeY++;
+                }
+                portavionesCantidad--;
+                ejeX = (int) (Math.random() * tamanyoTablero);
+                ejeY = (int) (Math.random() * tamanyoTablero);
+            }
+            else{
+                ejeX = (int) (Math.random() * tamanyoTablero);
+                ejeY = (int) (Math.random() * tamanyoTablero);
+            }
             }return;
 
     }
@@ -240,5 +270,24 @@ public class Main {
         for (int i = 0; i < ocultoTablero.length; i++){
          System.out.println(Arrays.toString(ocultoTablero[i]));
         }return;
+    }
+    static boolean posicionValida(char tipoBarco,int y, int x){
+
+        switch (tipoBarco) {
+            case lancha:
+                if (ocultoTablero[y][x] == agua) return true;
+                break;
+            case barco:
+                if (ocultoTablero[y][x] == agua && ocultoTablero[y][x+1] == agua && ocultoTablero[y][x+2] == agua) return true;
+                break;
+            case crucero:
+                if (ocultoTablero[y][x] == agua && ocultoTablero[y][x+1] == agua && ocultoTablero[y][x+2] == agua && ocultoTablero[y][x+3] == agua) return true;
+                break;
+            case portaviones:
+                if (ocultoTablero[y][x] == agua && ocultoTablero[y+1][x] == agua && ocultoTablero[y+2][x] == agua && ocultoTablero[y+3][x] == agua && ocultoTablero[y+4][x] == agua) return true;
+                break;
+                
+        }
+        return false;
     }
 }
