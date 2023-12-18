@@ -16,7 +16,7 @@ public class Main {
     static final char agua ='-';
     static final char lancha ='L';
     static final char barco = 'B';
-    static final char crucero = 'C';
+    static final char acorazado = 'Z';
     static final char portaviones = 'P';
 
     static final int espacioBarco = 2;
@@ -35,9 +35,9 @@ public class Main {
 
         seleccionDeDificultad();
         llenarTablero();
-        mostrarTableroOculto();
+        //mostrarTableroOculto();
 
-        /*do{
+        do{
             mostrarTableroJugador();
             System.out.println("Intentos restantes: "+intentos);
             if (inputUsuario() == 8) break;
@@ -47,7 +47,7 @@ public class Main {
 
         }while (jugando);
         if (intentos == 0) System.out.println("Has perdido");
-        else System.out.println("Has ganado");*/
+        else System.out.println("Has ganado");
         
 
     }
@@ -128,12 +128,12 @@ public class Main {
                     tipoBarco = barco;
                     break;
                 case barco:
-                    barcoPosicionAleatoria();
-                    tipoBarco = crucero;
+                barcoPosicionAleatoria();
+                tipoBarco = crucero;
                     break;
                 case crucero:
-                    cruceroPosicionAleatoria();
-                    tipoBarco = portaviones;
+                cruceroPosicionAleatoria();
+                tipoBarco = portaviones;
                     break;
                 case portaviones:
                     portavionesPosicionAleatoria();
@@ -219,9 +219,9 @@ public class Main {
         while (crucerosCantidad > 0) {
             if (ejeX+espacioCrucero >= tamanyoTablero) ejeX -= espacioCrucero;
 
-            if (posicionValida(crucero, ejeY, ejeX)) {
+            if (posicionValida(acorazado, ejeY, ejeX)) {
                 for (int i = 0; i < 4; i++){
-                    ocultoTablero[ejeY][ejeX] = crucero;
+                    ocultoTablero[ejeY][ejeX] = acorazado;
                     ejeX++;
                 }
                 crucerosCantidad--;
@@ -275,7 +275,7 @@ public class Main {
             case barco:
                 if (ocultoTablero[y][x] == agua && ocultoTablero[y][x+1] == agua && ocultoTablero[y][x+2] == agua) return true;
                 break;
-            case crucero:
+            case acorazado:
                 if (ocultoTablero[y][x] == agua && ocultoTablero[y][x+1] == agua && ocultoTablero[y][x+2] == agua && ocultoTablero[y][x+3] == agua) return true;
                 break;
             case portaviones:
