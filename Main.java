@@ -35,12 +35,21 @@ public class Main {
 
         seleccionDeDificultad();
         llenarTablero();
-        //mostrarTableroOculto();
+
+        int ejeX = 0;
+        int ejeY = 0;
 
         do{
+            mostrarTableroOculto();
             mostrarTableroJugador();
             System.out.println("Intentos restantes: "+intentos);
-            if (inputUsuario() == 8) break;
+
+            System.out.println("Introduce la coordenada X");
+            ejeX = obtenerCoordenadaX();
+            System.out.println("Introduce la coordenada Y");
+            ejeY = obtenerCoordenadaY();
+
+            compararTableros(ejeY, ejeX);
 
             intentos--;
             jugando = (intentos > 0);
@@ -50,6 +59,47 @@ public class Main {
         else System.out.println("Has ganado");
         
 
+    }
+    static int obtenerCoordenadaX(){
+        Scanner input = new Scanner(System.in);
+        boolean valido = false;
+        int ejeX = 0;
+
+        while (!valido) {
+            try {
+                ejeX = input.nextInt();
+                if (ejeX < tamanyoTablero && ejeX >= 0) valido = true;
+                else System.out.println("No es una coordenada valida");
+                input.nextLine();
+            } catch (Exception e) {
+                System.out.println("No es una coordenada valida");
+                input.nextLine();
+            }
+        }return ejeX;
+    }
+    static int obtenerCoordenadaY(){
+        Scanner input = new Scanner(System.in);
+        boolean valido = false;
+        char ejeY = 0;
+
+        while (!valido) {
+            try {
+                ejeY = input.next().charAt(0);
+                ejeY = Character.toUpperCase(ejeY);
+                ejeY -= 65;
+                if (ejeY < tamanyoTablero && ejeY >= 0) valido = true;
+                else System.out.println("No es una coordenada valida");
+                input.nextLine();
+            } catch (Exception e) {
+                System.out.println("No es una coordenada valida");
+                input.nextLine();
+            }
+        }return ejeY;
+    }
+    static void compararTableros(int ejeY, int ejeX){
+
+        if (ocultoTablero[ejeY][ejeX] == agua) jugadorTablero[ejeY][ejeX] = 'A';
+        else jugadorTablero[ejeY][ejeX] = 'X';
     }
     static int inputUsuario(){
 
@@ -148,19 +198,18 @@ public class Main {
     }
     static void mostrarTableroJugador() {
 
-        
-        for (int i = 0; i < jugadorTablero.length; i++){
-            if(i>0)System.out.print(i+"\t");
-            else System.out.print("\n");
+        System.out.print("\t");
+            for (int i = 0; i < jugadorTablero.length; i++){
+            System.out.print(i+"\t");
+        }
+        System.out.print("\n");
 
-            if (i == 0) {
-                for (int j = 0; j < jugadorTablero[i].length; j++){
-                    if (j == 0) System.out.print("\t"+j+"\t");
-                    else System.out.print(j+"\t");
-                }
-            }else for (int j = 0; j < jugadorTablero[i].length; j++){
-                    System.out.print(jugadorTablero[i][j] + "\t");
-            }System.out.println("\n");
+        for (int i = 0; i < jugadorTablero.length; i++){
+            System.out.print((char)(i+65)+"\t");
+            for (int j = 0; j < jugadorTablero[i].length; j++){
+                System.out.print(jugadorTablero[i][j]+"\t");
+            }
+            System.out.println();
         }return;
     }
     static void lanchaPosicionAleatoria(){
