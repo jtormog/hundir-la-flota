@@ -20,13 +20,15 @@ public class Main {
     static final char portaviones = 'P';
 
     static final int espacioBarco = 2;
-    static final int espacioCrucero = 3;
+    static final int espacioAcorazado = 3;
     static final int espacioPortaviones = 4;
 
     static int lanchasCantidad;
     static int barcosCantidad;
-    static int crucerosCantidad;
+    static int acorazadoCantidad;
     static int portavionesCantidad;
+
+    static int barcosRestantes;
 
     static int intentos = 50;
 
@@ -40,16 +42,19 @@ public class Main {
         int ejeY = 0;
 
         do{
-            mostrarTableroOculto();
+            //mostrarTableroOculto();
             mostrarTableroJugador();
+            if (barcosRestantes == 0) break;
             System.out.println("Intentos restantes: "+intentos);
 
-            System.out.println("Introduce la coordenada X");
-            ejeX = obtenerCoordenadaX();
-            System.out.println("Introduce la coordenada Y");
+            System.out.print("Introduce la coordenada Y: ");
             ejeY = obtenerCoordenadaY();
+            System.out.print("Introduce la coordenada X: ");
+            ejeX = obtenerCoordenadaX();
 
             compararTableros(ejeY, ejeX);
+
+            
 
             intentos--;
             jugando = (intentos > 0);
@@ -97,9 +102,18 @@ public class Main {
         }return ejeY;
     }
     static void compararTableros(int ejeY, int ejeX){
-
-        if (ocultoTablero[ejeY][ejeX] == agua) jugadorTablero[ejeY][ejeX] = 'A';
-        else jugadorTablero[ejeY][ejeX] = 'X';
+        if (jugadorTablero[ejeY][ejeX] != agua) {
+            System.out.println("Ya has disparado ahi");
+            intentos++;
+            return;
+        }
+        if (ocultoTablero[ejeY][ejeX] == agua) {
+            jugadorTablero[ejeY][ejeX] = 'A';
+        }
+        else{
+            jugadorTablero[ejeY][ejeX] = 'X';
+            barcosRestantes--;
+        } 
     }
     static int inputUsuario(){
 
@@ -129,28 +143,25 @@ public class Main {
                 switch (dificultad) {
                     case FACIL:
                         System.out.println("Modo Facil");
-                        lanchasCantidad = 5;
-                        barcosCantidad = 3;
-                        crucerosCantidad = 1;
-                        portavionesCantidad = 1;
+                        lanchasCantidad = 5; barcosCantidad = 3; acorazadoCantidad = 1; portavionesCantidad = 1;
+                        barcosRestantes = lanchasCantidad + barcosCantidad*3 + acorazadoCantidad*4 + portavionesCantidad*5;
                         seleccionado = true;
                         break;
                     case MEDIO:
                         System.out.println("Modo Medio");
-                        lanchasCantidad = 2;
-                        barcosCantidad = 1;
-                        crucerosCantidad = 1;
-                        portavionesCantidad = 1;
+                        lanchasCantidad = 2; barcosCantidad = 1; acorazadoCantidad = 1; portavionesCantidad = 1;
+                        barcosRestantes = lanchasCantidad + barcosCantidad*3 + acorazadoCantidad*4 + portavionesCantidad*5;
                         seleccionado = true;
                         break;
                     case DIFICIL:
                         System.out.println("Modo Dificil");
-                        lanchasCantidad = 1;
-                        barcosCantidad = 1;
+                        lanchasCantidad = 1; barcosCantidad = 1;
+                        barcosRestantes = lanchasCantidad + barcosCantidad*3 + acorazadoCantidad*4 + portavionesCantidad*5;
                         seleccionado = true;
                         break;
                     case CUSTOM:
                         System.out.println("Modo Custom");
+                        barcosRestantes = lanchasCantidad + barcosCantidad*3 + acorazadoCantidad*4 + portavionesCantidad*5;
                         seleccionado = true;
                         break;
                     default:
@@ -179,10 +190,10 @@ public class Main {
                     break;
                 case barco:
                 barcoPosicionAleatoria();
-                tipoBarco = crucero;
+                tipoBarco = acorazado;
                     break;
-                case crucero:
-                cruceroPosicionAleatoria();
+                case acorazado:
+                AcorazadoPosicionAleatoria();
                 tipoBarco = portaviones;
                     break;
                 case portaviones:
@@ -190,7 +201,7 @@ public class Main {
                     tipoBarco = lancha;
                     break;
             }
-            int totalBarcos = lanchasCantidad + barcosCantidad + crucerosCantidad + portavionesCantidad;
+            int totalBarcos = lanchasCantidad + barcosCantidad + acorazadoCantidad + portavionesCantidad;
             hayBarcos = (totalBarcos > 0);
     
         }while (hayBarcos);
@@ -259,21 +270,21 @@ public class Main {
         }return;
 
     }
-    static void cruceroPosicionAleatoria(){
+    static void AcorazadoPosicionAleatoria(){
 
-        int ejeX = 0;
-        int ejeY = 0;
+        int ejeX = (int) (Math.random() * tamanyoTablero);
+        int ejeY = (int) (Math.random() * tamanyoTablero);
 
 
-        while (crucerosCantidad > 0) {
-            if (ejeX+espacioCrucero >= tamanyoTablero) ejeX -= espacioCrucero;
+        while (acorazadoCantidad > 0) {
+            if (ejeX+espacioAcorazado >= tamanyoTablero) ejeX -= espacioAcorazado;
 
             if (posicionValida(acorazado, ejeY, ejeX)) {
                 for (int i = 0; i < 4; i++){
                     ocultoTablero[ejeY][ejeX] = acorazado;
                     ejeX++;
                 }
-                crucerosCantidad--;
+                acorazadoCantidad--;
                 ejeX = (int) (Math.random() * tamanyoTablero);
                 ejeY = (int) (Math.random() * tamanyoTablero);
             }
