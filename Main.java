@@ -8,20 +8,20 @@ public class Main {
     static final int DIFICIL = 3;
     static final int CUSTOM = 4;
 
-    static int tamanyoTablero = 26;
+    static int tamanyoTablero = 10;
 
     static char[][] ocultoTablero = new char[tamanyoTablero][tamanyoTablero];
     static char[][] jugadorTablero = new char[tamanyoTablero][tamanyoTablero];
 
-    static final char agua ='-';
-    static final char lancha ='L';
-    static final char barco = 'B';
-    static final char acorazado = 'Z';
-    static final char portaviones = 'P';
+    static final char AGUA ='-';
+    static final char LANCHA ='L';
+    static final char BARCO = 'B';
+    static final char ACORAZADO = 'Z';
+    static final char PORTAVIONES = 'P';
 
-    static final int espacioBarco = 2;
-    static final int espacioAcorazado = 3;
-    static final int espacioPortaviones = 4;
+    static final int ESPACIO_BARCO = 2;
+    static final int ESPACIO_ACORAZADO = 3;
+    static final int ESPACIO_PORTAVIONES = 4;
 
     static int lanchasCantidad;
     static int barcosCantidad;
@@ -56,9 +56,9 @@ public class Main {
 
 
             System.out.print("Selecciona una fila: ");
-            ejeY = obtenerCoordenadaY();
-            System.out.print("Selecciona una columna: ");
             ejeX = obtenerCoordenadaX();
+            System.out.print("Selecciona una columna: ");
+            ejeY = obtenerCoordenadaY();
 
             compararTableros(ejeY, ejeX);
 
@@ -72,7 +72,7 @@ public class Main {
         else System.out.println("Has ganado");
         
     }
-    static int obtenerCoordenadaX(){
+    static int obtenerCoordenadaY(){
         Scanner input = new Scanner(System.in);
         boolean valido = false;
         int ejeX = 0;
@@ -89,7 +89,7 @@ public class Main {
             }
         }return ejeX;
     }
-    static int obtenerCoordenadaY(){
+    static int obtenerCoordenadaX(){
         Scanner input = new Scanner(System.in);
         boolean valido = false;
         char ejeY = 0;
@@ -109,12 +109,12 @@ public class Main {
         }return ejeY;
     }
     static void compararTableros(int ejeY, int ejeX){
-        if (jugadorTablero[ejeY][ejeX] != agua) {
+        if (jugadorTablero[ejeY][ejeX] != AGUA) {
             System.out.println("Ya has disparado ahi");
             intentos++;
             return;
         }
-        if (ocultoTablero[ejeY][ejeX] == agua) {
+        if (ocultoTablero[ejeY][ejeX] == AGUA) {
             jugadorTablero[ejeY][ejeX] = 'A';
             System.out.println("\n\nAGUA");
         }
@@ -183,31 +183,31 @@ public class Main {
     static void llenarTablero() {
         for (int i = 0; i < ocultoTablero.length; i++){
             for (int j = 0; j < ocultoTablero[i].length; j++){
-                ocultoTablero[i][j] = agua;
-                jugadorTablero[i][j] = agua;
+                ocultoTablero[i][j] = AGUA;
+                jugadorTablero[i][j] = AGUA;
             }
         }
         boolean hayNavios;
-        char tipoBarco = lancha;
+        char tipoBarco = LANCHA;
 
         do {
 
             switch (tipoBarco) {
-                case lancha:
+                case LANCHA:
                     lanchaPosicionAleatoria();
-                    tipoBarco = barco;
+                    tipoBarco = BARCO;
                     break;
-                case barco:
+                case BARCO:
                 barcoPosicionAleatoria();
-                tipoBarco = acorazado;
+                tipoBarco = ACORAZADO;
                     break;
-                case acorazado:
+                case ACORAZADO:
                 AcorazadoPosicionAleatoria();
-                tipoBarco = portaviones;
+                tipoBarco = PORTAVIONES;
                     break;
-                case portaviones:
+                case PORTAVIONES:
                     portavionesPosicionAleatoria();
-                    tipoBarco = lancha;
+                    tipoBarco = LANCHA;
                     break;
             }
             int totalNavios = lanchasCantidad + barcosCantidad + acorazadoCantidad + portavionesCantidad;
@@ -253,8 +253,8 @@ public class Main {
                 ejeX = (int) (Math.random() * tamanyoTablero);
                 ejeY = (int) (Math.random() * tamanyoTablero);
 
-                if (posicionValida(lancha, ejeX, ejeY)) {
-                    ocultoTablero[ejeX][ejeY] = lancha;
+                if (posicionValida(LANCHA, ejeX, ejeY)) {
+                    ocultoTablero[ejeX][ejeY] = LANCHA;
                     lanchasCantidad--;
                 }
                  
@@ -267,12 +267,12 @@ public class Main {
         int indice = 0;
         while (barcosCantidad > 0) {
             
-            if (ejeX+espacioBarco >= tamanyoTablero) ejeX -= espacioBarco;
+            if (ejeX+ESPACIO_BARCO >= tamanyoTablero) ejeX -= ESPACIO_BARCO;
 
-            if (posicionValida(barco, ejeY, ejeX)) {
+            if (posicionValida(BARCO, ejeY, ejeX)) {
                 
                 for (int i = 0; i < 3; i++){
-                    ocultoTablero[ejeY][ejeX] = barco;
+                    ocultoTablero[ejeY][ejeX] = BARCO;
                     char ejeYConvertido = convertirAChar(ejeY);
                     char ejeXConvertido = convertirAChar(ejeX);
                     ejeX++;
@@ -290,7 +290,7 @@ public class Main {
                 ejeX = (int) (Math.random() * tamanyoTablero);
                 ejeY = (int) (Math.random() * tamanyoTablero);
             }
-        }System.out.println(Arrays.toString(posicionBarcos));
+        }
 
     }
     static void AcorazadoPosicionAleatoria(){
@@ -301,11 +301,11 @@ public class Main {
 
 
         while (acorazadoCantidad > 0) {
-            if (ejeX+espacioAcorazado >= tamanyoTablero) ejeX -= espacioAcorazado;
+            if (ejeX+ESPACIO_ACORAZADO >= tamanyoTablero) ejeX -= ESPACIO_ACORAZADO;
 
-            if (posicionValida(acorazado, ejeY, ejeX)) {
+            if (posicionValida(ACORAZADO, ejeY, ejeX)) {
                 for (int i = 0; i < 4; i++){
-                    ocultoTablero[ejeY][ejeX] = acorazado;
+                    ocultoTablero[ejeY][ejeX] = ACORAZADO;
                     char ejeYConvertido = convertirAChar(ejeY);
                     char ejeXConvertido = convertirAChar(ejeX);
                     ejeX++;
@@ -332,11 +332,11 @@ public class Main {
         int indice = 0;
 
         while (portavionesCantidad > 0) {
-           if (ejeY+espacioPortaviones >= tamanyoTablero) ejeY -= espacioPortaviones;
+           if (ejeY+ESPACIO_PORTAVIONES >= tamanyoTablero) ejeY -= ESPACIO_PORTAVIONES;
 
-            if (posicionValida(portaviones, ejeY, ejeX)) {
+            if (posicionValida(PORTAVIONES, ejeY, ejeX)) {
                 for (int i = 0; i < 5; i++){
-                    ocultoTablero[ejeY][ejeX] = portaviones;
+                    ocultoTablero[ejeY][ejeX] = PORTAVIONES;
                     char ejeYConvertido = convertirAChar(ejeY);
                     char ejeXConvertido = convertirAChar(ejeX);
                     ejeY++;
@@ -364,17 +364,17 @@ public class Main {
     static boolean posicionValida(char tipoBarco,int y, int x){
 
         switch (tipoBarco) {
-            case lancha:
-                if (ocultoTablero[y][x] == agua) return true;
+            case LANCHA:
+                if (ocultoTablero[y][x] == AGUA) return true;
                 break;
-            case barco:
-                if (ocultoTablero[y][x] == agua && ocultoTablero[y][x+1] == agua && ocultoTablero[y][x+2] == agua) return true;
+            case BARCO:
+                if (ocultoTablero[y][x] == AGUA && ocultoTablero[y][x+1] == AGUA && ocultoTablero[y][x+2] == AGUA) return true;
                 break;
-            case acorazado:
-                if (ocultoTablero[y][x] == agua && ocultoTablero[y][x+1] == agua && ocultoTablero[y][x+2] == agua && ocultoTablero[y][x+3] == agua) return true;
+            case ACORAZADO:
+                if (ocultoTablero[y][x] == AGUA && ocultoTablero[y][x+1] == AGUA && ocultoTablero[y][x+2] == AGUA && ocultoTablero[y][x+3] == AGUA) return true;
                 break;
-            case portaviones:
-                if (ocultoTablero[y][x] == agua && ocultoTablero[y+1][x] == agua && ocultoTablero[y+2][x] == agua && ocultoTablero[y+3][x] == agua && ocultoTablero[y+4][x] == agua) return true;
+            case PORTAVIONES:
+                if (ocultoTablero[y][x] == AGUA && ocultoTablero[y+1][x] == AGUA && ocultoTablero[y+2][x] == AGUA && ocultoTablero[y+3][x] == AGUA && ocultoTablero[y+4][x] == AGUA) return true;
                 break;
                 
         }
@@ -388,14 +388,14 @@ public class Main {
         int indice = 0;
 
         switch (tipoBarco) {
-            case lancha:
+            case LANCHA:
                 hundido = true;
                 break;
-            case barco:
+            case BARCO:
                 for (int i = 0; i < posicionBarcos.length; i++) {
                     if (posicionBarcos[i].contains(coordenada)) indice = i;   
                 }
-                for (int i = 0; i <= espacioBarco ; i++) {
+                for (int i = 0; i <= ESPACIO_BARCO ; i++) {
                     coordenada = posicionBarcos[indice];
                     for (int j = 0; j < coordenada.length(); j+=2) {
                         ejeY = coordenada.charAt(j)-65;
@@ -409,11 +409,11 @@ public class Main {
                     
                 }
                 break;
-                case acorazado:
+                case ACORAZADO:
                 for (int i = 0; i < posicionAcorazados.length; i++) {
                     if (posicionAcorazados[i].contains(coordenada)) indice = i;   
                 }
-                for (int i = 0; i <= espacioAcorazado ; i++) {
+                for (int i = 0; i <= ESPACIO_ACORAZADO ; i++) {
                     coordenada = posicionAcorazados[indice];
                     for (int j = 0; j < coordenada.length(); j+=2) {
                         ejeY = coordenada.charAt(j)-65;
@@ -428,8 +428,23 @@ public class Main {
                 }
                     
                 break;
-                case portaviones:
-
+                case PORTAVIONES:
+                for (int i = 0; i < posicionPortaviones.length; i++) {
+                    if (posicionPortaviones[i].contains(coordenada)) indice = i;   
+                }
+                for (int i = 0; i <= ESPACIO_PORTAVIONES ; i++) {
+                    coordenada = posicionPortaviones[indice];
+                    for (int j = 0; j < coordenada.length(); j+=2) {
+                        ejeY = coordenada.charAt(j)-65;
+                        ejeX = coordenada.charAt(j+1)-65;
+                        if (jugadorTablero[ejeY][ejeX] != 'X') {
+                            hundido = false;
+                            break;                            
+                        }
+                        else hundido = true;
+                    }
+                    
+                }
                 break;
             default:
                 break;
