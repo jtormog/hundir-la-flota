@@ -37,7 +37,7 @@ public class Main {
         llenarTablero();
 
         do{
-            //mostrarTableroOculto();
+            mostrarTableroOculto();
             mostrarTableroJugador();
 
             if (naviosRestantes == 0) break;
@@ -48,11 +48,7 @@ public class Main {
             int ejeX = obtenerCoordenadaX();
             System.out.print("Selecciona una columna: ");
             int ejeY = obtenerCoordenadaY();
-<<<<<<< HEAD
             compararTableros(ejeY, ejeX);
-=======
-            compararTableros(ejeX, ejeY);
->>>>>>> origin/main
 
             intentos--;
 
@@ -63,7 +59,6 @@ public class Main {
         else System.out.println("Has ganado");
         
     }
-<<<<<<< HEAD
     static void seleccionDeDificultad(){
         final int FACIL = 1;
         final int MEDIO = 2;
@@ -182,9 +177,6 @@ public class Main {
     }
     static void llenarTablero() {
         //primero se llenan los dos tableros de agua
-=======
-    static void llenarTablero() {
->>>>>>> origin/main
         for (int i = 0; i < ocultoTablero.length; i++){
             for (int j = 0; j < ocultoTablero[i].length; j++){
                 ocultoTablero[i][j] = AGUA;
@@ -193,12 +185,8 @@ public class Main {
         }
         boolean hayNavios;
         char tipoNavio = LANCHA;
-<<<<<<< HEAD
         //El siguiente do while coloca cada navío en la tabla comprobando antes que no sobreescribe otro
         //cuando se han colocado todos los navíos el bucle acaba
-=======
-
->>>>>>> origin/main
         do {
             tipoNavio = switch (tipoNavio) {
                 case LANCHA -> {
@@ -207,11 +195,7 @@ public class Main {
                         int ejeX = (int) (Math.random() * tamanyoTablero);
                         int ejeY = (int) (Math.random() * tamanyoTablero);
 
-<<<<<<< HEAD
                         if (posicionValida(LANCHA, ejeY, ejeX)) {
-=======
-                        if (posicionValida(LANCHA, ejeX, ejeY)) {
->>>>>>> origin/main
                             ocultoTablero[ejeX][ejeY] = LANCHA;
                             lanchasCantidad--;
                         }
@@ -254,59 +238,8 @@ public class Main {
                 input.nextLine();
             }
         }
-<<<<<<< HEAD
         return opcion;
     }
-=======
-
-        return opcion;
-    }
-    static void seleccionDeDificultad(){
-        final int FACIL = 1;
-        final int MEDIO = 2;
-        final int DIFICIL = 3;
-        final int CUSTOM = 4;
-
-        System.out.println("Selecciona una dificultad:\n\n1. Facil\n2. Medio\n3. Dificil\n4. Custom\n");
-        int dificultad = inputUsuario();
-        boolean seleccionado = false;
-
-        while (!seleccionado) {
-            switch (dificultad) {
-                case FACIL:
-                    System.out.println("Modo Facil");
-                    lanchasCantidad = 5; barcosCantidad = 3; acorazadoCantidad = 1; portavionesCantidad = 1;
-                    seleccionado = true;
-                    break;
-                case MEDIO:
-                    System.out.println("Modo Medio");
-                    lanchasCantidad = 2; barcosCantidad = 1; acorazadoCantidad = 1; portavionesCantidad = 1;
-                    seleccionado = true;
-                    break;
-                case DIFICIL:
-                    System.out.println("Modo Dificil");
-                    lanchasCantidad = 1; barcosCantidad = 1;
-                    seleccionado = true;
-                    break;
-                case CUSTOM:
-                    System.out.println("Modo Custom");
-                    modoCustom();
-                    seleccionado = true;
-                    break;
-                default:
-                    System.out.println("No es una opcion valida");
-                    dificultad = inputUsuario();
-                    break;
-            }
-        }naviosRestantes = lanchasCantidad + barcosCantidad*3 + acorazadoCantidad*4 + portavionesCantidad*5;
-        posicionBarcos = new String[barcosCantidad];
-        posicionAcorazados = new String[acorazadoCantidad];
-        posicionPortaviones = new String[portavionesCantidad];
-    }
-    static void modoCustom(){
-
-    }
->>>>>>> origin/main
     static void colocarNavio (char tipoNavio, int tamanyoNavio, String[] posicionNavio, int navioCantidad){
         int ejeX = (int) (Math.random() * tamanyoTablero);
         int ejeY = (int) (Math.random() * tamanyoTablero);
@@ -314,13 +247,7 @@ public class Main {
 
         if (tipoNavio != PORTAVIONES) {
             while (navioCantidad > 0) {
-<<<<<<< HEAD
                 if (ejeX + tamanyoNavio >= tamanyoTablero) ejeX -= tamanyoNavio;
-=======
-
-                if (ejeX + tamanyoNavio >= tamanyoTablero) ejeX -= tamanyoNavio;
-
->>>>>>> origin/main
                 if (posicionValida(tipoNavio, ejeY, ejeX)) {
 
                     for (int i = 0; i <= tamanyoNavio; i++) {
@@ -351,13 +278,7 @@ public class Main {
             }
         }else{
             while (navioCantidad > 0) {
-<<<<<<< HEAD
                 if (ejeY + tamanyoNavio >= tamanyoTablero) ejeY -= tamanyoNavio;
-=======
-
-                if (ejeY + tamanyoNavio >= tamanyoTablero) ejeY -= tamanyoNavio;
-
->>>>>>> origin/main
                 if (posicionValida(tipoNavio, ejeY, ejeX)) {
 
                     for (int i = 0; i <= tamanyoNavio; i++) {
@@ -400,11 +321,7 @@ public class Main {
         }
     }
     static void mostrarTableroJugador() {
-<<<<<<< HEAD
         //se muestra el tablero del jugador además del número de la columna y la letra de la fila
-=======
-
->>>>>>> origin/main
         System.out.print("\t");
         for (int i = 0; i < jugadorTablero.length; i++){
             System.out.print(i+"\t");
@@ -472,13 +389,10 @@ public class Main {
             else System.out.println("\n\nTOCADO");
         } 
     }
-<<<<<<< HEAD
     //Si el jugador dispara a un navío se busca el índice del navío en el array posición correspondiente
     //Después se sustituye la variable coordenada por el navío que se ha impactado, se recorre el navío
     //en cuestión y se comprueba si en el tablero del jugador encontramos 'X' en cada celda
     //Si cada celda es una 'X' se considera tocado y hundido
-=======
->>>>>>> origin/main
     static boolean tocadoYHundido(char tipoNavio, int ejeY, int ejeX){
 
         boolean hundido = false;
@@ -494,7 +408,6 @@ public class Main {
                 hundido = true;
                 break;
             case BARCO:
-<<<<<<< HEAD
                 posicionNavio = posicionBarcos;
                 tamanyoNavio = ESPACIO_BARCO;
                 break;
@@ -505,61 +418,6 @@ public class Main {
                 case PORTAVIONES:
                 posicionNavio = posicionPortaviones;
                 tamanyoNavio = ESPACIO_PORTAVIONES;
-=======
-                for (int i = 0; i < posicionBarcos.length; i++) {
-                    if (posicionBarcos[i].contains(coordenada)) indice = i;   
-                }
-                for (int i = 0; i <= ESPACIO_BARCO ; i++) {
-                    coordenada = posicionBarcos[indice];
-                    for (int j = 0; j < coordenada.length(); j+=2) {
-                        ejeY = coordenada.charAt(j)-65;
-                        ejeX = coordenada.charAt(j+1)-65;
-                        if (jugadorTablero[ejeY][ejeX] != 'X') {
-                            hundido = false;
-                            break;                            
-                        }
-                        else hundido = true;
-                    }
-
-                }
-                break;
-                case ACORAZADO:
-                for (int i = 0; i < posicionAcorazados.length; i++) {
-                    if (posicionAcorazados[i].contains(coordenada)) indice = i;   
-                }
-                for (int i = 0; i <= ESPACIO_ACORAZADO ; i++) {
-                    coordenada = posicionAcorazados[indice];
-                    for (int j = 0; j < coordenada.length(); j+=2) {
-                        ejeY = coordenada.charAt(j)-65;
-                        ejeX = coordenada.charAt(j+1)-65;
-                        if (jugadorTablero[ejeY][ejeX] != 'X') {
-                            hundido = false;
-                            break;                            
-                        }
-                        else hundido = true;
-                    }
-                    
-                }
-
-                break;
-                case PORTAVIONES:
-                for (int i = 0; i < posicionPortaviones.length; i++) {
-                    if (posicionPortaviones[i].contains(coordenada)) indice = i;   
-                }
-                for (int i = 0; i <= ESPACIO_PORTAVIONES ; i++) {
-                    coordenada = posicionPortaviones[indice];
-                    for (int j = 0; j < coordenada.length(); j+=2) {
-                        ejeY = coordenada.charAt(j)-65;
-                        ejeX = coordenada.charAt(j+1)-65;
-                        if (jugadorTablero[ejeY][ejeX] != 'X') {
-                            hundido = false;
-                            break;                            
-                        }
-                        else hundido = true;
-                    }
-
-                }
->>>>>>> origin/main
                 break;
             default:
                 break;
