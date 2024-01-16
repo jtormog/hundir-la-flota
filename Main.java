@@ -37,7 +37,7 @@ public class Main {
         llenarTablero();
 
         do{
-            mostrarTableroOculto();
+            //mostrarTableroOculto();
             mostrarTableroJugador();
 
             if (naviosRestantes == 0) break;
@@ -336,7 +336,7 @@ public class Main {
             System.out.println();
         }
     }
-    static int obtenerCoordenadaY(){
+    static int obtenerCoordenadaX(){
         Scanner input = new Scanner(System.in);
         boolean valido = false;
         int ejeY = 0;
@@ -353,7 +353,7 @@ public class Main {
             }
         }return ejeY;
     }
-    static int obtenerCoordenadaX(){
+    static int obtenerCoordenadaY(){
         Scanner input = new Scanner(System.in);
         boolean valido = false;
         char ejeX = 0;
@@ -373,6 +373,7 @@ public class Main {
         }return ejeX;
     }
     static void compararTableros(int ejeY, int ejeX){
+
         if (jugadorTablero[ejeY][ejeX] != AGUA) {
             System.out.println("Ya has disparado ahi");
             intentos++;
