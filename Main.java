@@ -45,9 +45,9 @@ public class Main {
 
 
             System.out.print("Selecciona una fila: ");
-            int ejeX = obtenerCoordenadaX();
-            System.out.print("Selecciona una columna: ");
             int ejeY = obtenerCoordenadaY();
+            System.out.print("Selecciona una columna: ");
+            int ejeX = obtenerCoordenadaX();
             compararTableros(ejeY, ejeX);
 
             intentos--;
